@@ -1,3 +1,10 @@
+/**
+ * @date 11 Nov 2015
+ * @author Sean Chester
+ * @author dariuss
+ */
+
+
 #ifndef _UTILITIES_H_
 #define _UTILITIES_H_
 #include <vector>
@@ -34,41 +41,46 @@ void PrintSkyline(const vector<int> &sky) {
   printf( "\n" );
 }
 
-bool CompareTwoLists(vector<int>& list1, vector<int>& list2, bool print_missing) {
-  bool flag = true;
-  if ( list1.size() == list2.size() ) {
-    sort( list1.begin(), list1.end() );
-    sort( list2.begin(), list2.end() );
-    for (unsigned i = 0; i < list1.size(); i++) {
-      if ( list1[i] != list2[i] ) {
-        flag = false;
-        break;
-      }
-    }
-  } else {
-    flag = false;
+/**
+ * Compares the contents to two lists of length n to ensure they are identical.
+ * @param list1 The first list
+ * @param list2 The second list
+ * @param The requisite length of both lists
+ * @param print_mismatches True if the mismatches should be printed to stdout.
+ * @return True if both lists are identical, even down to order and length; 
+ * false otherwise.
+ */
+bool CompareTwoLists( std::vector< uint32_t >& list1, std::vector< uint32_t >& list2, 
+	uint32_t n, bool print_mismatches ) {
+	
+  
+  if( list1.size() != n ) { 
+  	if( print_mismatches ) { 
+  		std::cout << "List 1 has only " << list1.size() << " of " 
+  			<< n << " results." << std::endl;
+  	}
+  	return false; 
   }
-
-  if (!flag && print_missing) {
-    sort( list1.begin(), list1.end() );
-    sort( list2.begin(), list2.end() );
-    printf( "list1 missing:" );
-    for (uint32_t i = 0; i < list2.size(); ++i) {
-      if ( !std::binary_search( list1.begin(), list1.end(), list2[i] ) ) {
-        printf( " %d", list2[i] );
-      }
-    }
-    printf( "\n" );
-    printf( "list2 missing:" );
-    for (uint32_t i = 0; i < list1.size(); ++i) {
-      if ( !std::binary_search( list2.begin(), list2.end(), list1[i] ) ) {
-        printf( " %d", list1[i] );
-      }
-    }
-    printf( "\n" );
+  if( list2.size() != n ) { 
+  	if( print_mismatches ) { 
+  		std::cout << "List 2 has only " << list2.size() << " of " 
+  			<< n << " results." << std::endl;
+  	}
+  	return false; 
   }
-
-  return flag;
+  
+  bool result = true;
+  for( uint32_t i = 0; i < n; ++i ) {
+  	if( list1[ i ] != list2[ i ] ) {
+  		if( print_mismatches ) {
+  			std::cout << "list1[" << i << "]=" << list1[ i ] << " but list2[" << i << 
+  				"]=" << list2[ i ] << std::endl;
+  		}
+  		result = false;
+  	}
+  }
+  
+  return result;
 }
 
 vector<string> &my_split(const string &s, char delim, vector<string> &elems) {

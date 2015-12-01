@@ -1,8 +1,8 @@
-/*
+/**
  * common.cpp
  *
- *  Created on: Feb 27, 2014
- *      Author: dariuss
+ * @date 27 Feb 2014
+ * @author dariuss
  */
 
 #include "common/common.h"

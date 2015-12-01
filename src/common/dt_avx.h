@@ -1,10 +1,8 @@
-/*
- * dt_avx.h
+/**
+ * Dominance tests using AVX/SSE instructions.
  *
- *  Created on: Mar 14, 2014
- *      Author: dariuss
- *
- *  Dominance tests using AVX/SSE instructions.
+ * @date 14 Mar 2014
+ * @author dariuss
  */
 
 #ifndef DT_AVX_H_
@@ -12,7 +10,8 @@
 
 #include <immintrin.h>  // AVX
 
-inline uint32_t DT_bitmap_dvc( const TUPLE &cur, const TUPLE &sky ) {
+template< uint32_t NUM_DIMS >
+inline uint32_t DT_bitmap_dvc( const TUPLE< NUM_DIMS > &cur, const TUPLE< NUM_DIMS > &sky ) {
 #if COUNT_DT==1
   __sync_fetch_and_add( &dt_count, 1 );
 #endif
@@ -77,7 +76,8 @@ inline uint32_t DT_bitmap_dvc( const TUPLE &cur, const TUPLE &sky ) {
   return lattice;
 }
 
-inline uint32_t DT_bitmap( const TUPLE cur, const TUPLE sky ) {
+template< uint32_t NUM_DIMS >
+inline uint32_t DT_bitmap( const TUPLE< NUM_DIMS > cur, const TUPLE< NUM_DIMS > sky ) {
 #if COUNT_DT==1
   __sync_fetch_and_add( &dt_count, 1 );
 #endif
@@ -140,10 +140,11 @@ inline uint32_t DT_bitmap( const TUPLE cur, const TUPLE sky ) {
   return lattice;
 }
 
-/*
+/**
  * 2-way dominance test with NO assumption for distinct value condition.
  */
-inline int DominanceTest( const TUPLE &left, const TUPLE &right ) {
+template< uint32_t NUM_DIMS >
+inline int DominanceTest( const TUPLE< NUM_DIMS > &left, const TUPLE< NUM_DIMS > &right ) {
 #if COUNT_DT==1
   __sync_fetch_and_add( &dt_count, 1 );
 #endif
@@ -239,11 +240,12 @@ inline int DominanceTest( const TUPLE &left, const TUPLE &right ) {
     return DOM_INCOMP; //equal.
 }
 
-/*
+/**
  * One-way (optimized) dominance test.
  * No assumption for distinct value condition.
  */
-inline bool DominateLeft( const TUPLE &left, const TUPLE &right ) {
+template< uint32_t NUM_DIMS >
+inline bool DominateLeft( const TUPLE< NUM_DIMS > &left, const TUPLE< NUM_DIMS > &right ) {
 #if COUNT_DT==1
   __sync_fetch_and_add( &dt_count, 1 );
 #endif
@@ -304,11 +306,12 @@ inline bool DominateLeft( const TUPLE &left, const TUPLE &right ) {
   return false; //points are equal.
 }
 
-/*
+/**
  * One-way (optimized) dominance test.
  * With distinct value condition assumption.
  */
-inline bool DominateLeftDVC( const TUPLE &left, const TUPLE &right ) {
+template< uint32_t NUM_DIMS >
+inline bool DominateLeftDVC( const TUPLE< NUM_DIMS > &left, const TUPLE< NUM_DIMS > &right ) {
 #if COUNT_DT==1
   __sync_fetch_and_add( &dt_count, 1 );
 #endif

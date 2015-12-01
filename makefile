@@ -1,23 +1,22 @@
 ############################################################
 # Makefile for Benchmarking Skyline Algorithms             #
+#   Copyright (c) 2015                                     #
 #   Darius Sidlauskas (darius.sidlauskas@epfl.ch)          #
-#   Sean Chester (schester@cs.au.dk)                       #
-#   Copyright (c) 2014 Aarhus University                   #
+#   Sean Chester (sean.chester@idi.ntnu.no)                #
 ############################################################
 
 RM = rm -rf
 MV = mv
 CP = cp -rf
-CC = g++
+CC = g++-5
 
-TARGET = $(OUT)/SkyBench
+TARGET = $(OUT)/ParallelTKDQ
 
 SRC = $(wildcard src/util/*.cpp) \
 	  $(wildcard src/common/*.cpp) \
-  	  $(wildcard src/bskytree/*.cpp) \
-  	  $(wildcard src/pskyline/*.cpp) \
-  	  $(wildcard src/qflow/*.cpp) \
-  	  $(wildcard src/hybrid/*.cpp) \
+  	  $(wildcard src/naive/*.cpp) \
+  	  $(wildcard src/refinement/*.cpp) \
+  	  $(wildcard src/partition_based/*.cpp) \
       $(wildcard src/*.cpp)
 
 OBJ = $(addprefix $(OUT)/,$(notdir $(SRC:.cpp=.o)))
@@ -30,28 +29,21 @@ INCLUDES = -I ./src/
 LIB = 
 
 # Forces make to look these directories
-VPATH = src:src/util:src/bskytree:src/pskyline:src/qflow:src/hybrid:src/common
-
-DIMS=6
-V=VERBOSE
-DT=0
-PROFILER=0
+VPATH = src:src/util:src/naive:src/refinement:src/partition_based:src/common
 
 # By default compiling for performance (optimal)
 CXXFLAGS = -O3 -m64 -DNDEBUG\
-		   -DNUM_DIMS=$(DIMS) -D$(V) -DCOUNT_DT=$(DT) -DPROFILER=$(PROFILER)\
-	       -Wno-deprecated -Wno-write-strings -nostdlib -Wpointer-arith \
-    	   -Wcast-qual -Wcast-align \
-       	   -std=c++0x -fopenmp -mavx
+       -Wno-deprecated -Wno-write-strings -nostdlib -Wpointer-arith \
+       -Wcast-qual -Wcast-align \
+       -std=c++0x -fopenmp -mavx -march=native 
            
-LDFLAGS=-m64 -lrt -fopenmp
+LDFLAGS=-m64 -fopenmp #-lrt -lpapi
 
 # Target-specific Variable values:
 # Compile for debugging (works with valgrind)
 dbg : CXXFLAGS = -O0 -g3 -m64\
-	  -DNUM_DIMS=$(DIMS) -DVERBOSE -DCOUNT_DT=0 -DPROFILER=1\
-	  -Wno-deprecated -Wno-write-strings -nostdlib -Wpointer-arith \
-      -Wcast-qual -Wcast-align -std=c++0x
+		-Wno-deprecated -Wno-write-strings -nostdlib -Wpointer-arith \
+    -Wcast-qual -Wcast-align -std=c++0x
 dbg : all
 
 # All Target
