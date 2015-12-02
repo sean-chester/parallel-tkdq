@@ -8,7 +8,7 @@
 RM = rm -rf
 MV = mv
 CP = cp -rf
-CC = g++-5
+CC = g++
 
 TARGET = $(OUT)/ParallelTKDQ
 
