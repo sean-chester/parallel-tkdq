@@ -23,17 +23,20 @@ This ParallelTKDQ software implements several alternative algorithms
 for computing top-k dominating queries with multi-core parallelism. 
 The algorithms have been initially described in: 
 
-> S. Chester et al. 2016. "Top-k dominating queries, in parallel, in   
->   memory." Under review for: Proceedings of EDBT, 2 pages.
+> Sean Chester, Orestis Gkorgkas, and Kjetil Nørvåg. (2016).
+>   "Top-k dominating queries, in parallel, in memory."
+>   In: _Proceedings of the 19th International Conference on
+>   Extending Database Technology (EDBT)_, 698–699.
+>   doi: https://doi.org/10.5441/002/edbt.2016.93.
 
 
-This software is based on the SkyBench suite, which was developed for
-the following paper:
+This software is based on [the SkyBench suite](https://github.com/sean-chester/SkyBench),
+which was developed for the following paper:
 
-> S. Chester et al. 2015. "Scalable parallelization of skyline  
->   computation for multi-core processors." In: Proceedings of  
->   the 18th IEEE International Conference on Data Engineering  
->		(ICDE 2015), pp. 1083--1094.
+> Sean Chester, Darius Sidlauskas, Ira Assent, and Kenneth S. Bøgh. (2015).
+>   "Scalable parallelization of skyline computation for multi-core processors."
+>   In: _Proceedings of the 18th IEEE International Conference on Data Engineering
+>		(ICDE 2015)_, pp. 1083–1094.
 >   doi: http://dx.doi.org/10.1109/ICDE.2015.7113358
 
 
